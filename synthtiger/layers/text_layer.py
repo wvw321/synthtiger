@@ -172,11 +172,11 @@ class TextLayer(Layer):
 
         if not vertical:
             ascent, descent = font.getmetrics()
-            width = font.getsize(text, direction=direction)[0]
+            width = font.getbbox(text, direction=direction)[2]
             height = ascent + descent
             bbox = [0, -ascent, width, height]
         else:
-            width, height = font.getsize(text, direction=direction)
+            width, height = font.getbbox(text, direction=direction)[2:4]
             bbox = [-width // 2, 0, width, height]
 
         return bbox
@@ -204,5 +204,5 @@ class TextLayer(Layer):
         return stroke_width
 
     def _get_direction(self, vertical):
-        direction = "ltr" if not vertical else "ttb"
+        direction = None if not vertical else "ttb"
         return direction
